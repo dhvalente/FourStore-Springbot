@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.foursys.fourcamp.fourstore.model.Client;
 
-public interface ClienteData extends JpaRepository<Client, Long> {
+public interface ClientData extends JpaRepository<Client, Long> {
 
 }

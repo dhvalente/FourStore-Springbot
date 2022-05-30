@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import br.com.foursys.fourcamp.fourstore.data.ClienteData;
+import br.com.foursys.fourcamp.fourstore.data.ClientData;
 import br.com.foursys.fourcamp.fourstore.model.Client;
 
 @Configuration
@@ -13,7 +13,7 @@ import br.com.foursys.fourcamp.fourstore.model.Client;
 public class TestConfig implements CommandLineRunner {
 
 	@Autowired
-	private ClienteData clientData;
+	private ClientData clientData;
 
 	@Override
 	public void run(String... args) throws Exception {
