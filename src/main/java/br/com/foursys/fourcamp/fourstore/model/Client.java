@@ -1,15 +1,20 @@
 package br.com.foursys.fourcamp.fourstore.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 @Entity
+@Table(name = "tb_user")
 public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -18,6 +23,9 @@ public class Client implements Serializable {
 	private Long id;
 	private String name;
 	private String cpf;
+	
+	@OneToMany(mappedBy = "client")
+	private List<Order> orders = new ArrayList<>();
 
 	public Client() {
 
@@ -52,6 +60,10 @@ public class Client implements Serializable {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
+	
+	public List<Order> getOrders() {
+		return orders;
+	}
 
 	@Override
 	public String toString() {
@@ -74,5 +86,7 @@ public class Client implements Serializable {
 		Client other = (Client) obj;
 		return Objects.equals(cpf, other.cpf) && Objects.equals(id, other.id);
 	}
+
+
 
 }
