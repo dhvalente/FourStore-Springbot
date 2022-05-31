@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+
+import br.com.foursys.fourcamp.fourstore.data.CategoryData;
 import br.com.foursys.fourcamp.fourstore.data.ClientData;
 import br.com.foursys.fourcamp.fourstore.data.OrderData;
 import br.com.foursys.fourcamp.fourstore.enums.OrderStatus;
+import br.com.foursys.fourcamp.fourstore.model.Category;
 import br.com.foursys.fourcamp.fourstore.model.Client;
 import br.com.foursys.fourcamp.fourstore.model.Order;
 
@@ -20,10 +23,20 @@ public class TestConfig implements CommandLineRunner {
 	private ClientData clientData;
 	
 	@Autowired
+	private CategoryData categoryData;
+	
+	@Autowired
 	private OrderData orderData;
 
 	@Override
 	public void run(String... args) throws Exception {
+		
+		Category cat1 = new Category(null, "Electronics");
+		Category cat2 = new Category(null, "Books");
+		Category cat3 = new Category(null, "Computers"); 
+		
+		categoryData.saveAll(Arrays.asList(cat1 , cat2, cat3));
+		
 		Client c1 = new Client(null, "Diogo Valente", "00055522277");
 		Client c2 = new Client(null, "Jose Robson", "11144499965");
 		
