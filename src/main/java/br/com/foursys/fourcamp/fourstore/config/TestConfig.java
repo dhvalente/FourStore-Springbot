@@ -13,6 +13,7 @@ import br.com.foursys.fourcamp.fourstore.data.OrdemItemData;
 import br.com.foursys.fourcamp.fourstore.data.OrderData;
 import br.com.foursys.fourcamp.fourstore.data.ProductData;
 import br.com.foursys.fourcamp.fourstore.enums.OrderStatus;
+import br.com.foursys.fourcamp.fourstore.model.Address;
 import br.com.foursys.fourcamp.fourstore.model.Category;
 import br.com.foursys.fourcamp.fourstore.model.Client;
 import br.com.foursys.fourcamp.fourstore.model.Order;
@@ -60,12 +61,21 @@ public class TestConfig implements CommandLineRunner {
 		p2.getCategories().add(cat3);
 		p3.getCategories().add(cat3);
 		p4.getCategories().add(cat3);
-		p5.getCategories().add(cat2);
-		
+		p5.getCategories().add(cat2);		
 		productData.saveAll(Arrays.asList(p1 , p2, p3, p4, p5));
+		
+
 		
 		Client c1 = new Client(null, "Diogo Valente", "00055522277");
 		Client c2 = new Client(null, "Jose Robson", "11144499965");
+		Address a1 = new Address("Rua carochinha", "1111", "Marialva", "Jardim Itabera", "PR", "87145555",c1);
+		Address a2 = new Address("Rua Aristides Bonifácio", "444", "Marialva", "Centro", "PR", "86990000",c2);		
+		c1.setAdress(a1);
+		c2.setAdress(a2);
+		clientData.save(c1);
+		clientData.save(c2);
+		
+		System.out.println(a2.FindCep("86990000"));
 		
 		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), OrderStatus.PAID, c1);
 		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"),OrderStatus.WAITING_PAYMENT, c2);
