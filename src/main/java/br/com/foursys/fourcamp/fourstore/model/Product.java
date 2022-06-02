@@ -26,9 +26,12 @@ public class Product implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private String description;
-	private Double price;
-	private String imgUrl;
+	private String color;
+	private String season;
+	private String size;
+	private Double purchasePrice;
+	private Double sellPrice;
+	private String sku;
 
 	@ManyToMany
 	@JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
@@ -41,13 +44,17 @@ public class Product implements Serializable {
 	private Product() {
 	}
 
-	public Product(Long id, String name, String description, Double price, String imgUrl) {
+	public Product(Long id, String name, String color, String season, String size, Double purchasePrice,
+			Double sellPrice) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.description = description;
-		this.price = price;
-		this.imgUrl = imgUrl;
+		this.color = color;
+		this.season = season;
+		this.size = size;
+		this.purchasePrice = purchasePrice;
+		this.sellPrice = sellPrice;
+		this.sku = color + season + size;
 	}
 
 	public Long getId() {
@@ -66,32 +73,68 @@ public class Product implements Serializable {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getColor() {
+		return color;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setColor(String color) {
+		this.color = color;
 	}
 
-	public Double getPrice() {
-		return price;
+	public String getSeason() {
+		return season;
 	}
 
-	public void setPrice(Double price) {
-		this.price = price;
+	public void setSeason(String season) {
+		this.season = season;
 	}
 
-	public String getImgUrl() {
-		return imgUrl;
+	public String getSize() {
+		return size;
 	}
 
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	public Double getPurchasePrice() {
+		return purchasePrice;
+	}
+
+	public void setPurchasePrice(Double purchasePrice) {
+		this.purchasePrice = purchasePrice;
+	}
+
+	public Double getSellPrice() {
+		return sellPrice;
+	}
+
+	public void setSellPrice(Double sellPrice) {
+		this.sellPrice = sellPrice;
+	}
+
+	public String getSku() {
+		return sku;
+	}
+
+	public void setSku(String sku) {
+		this.sku = sku;
 	}
 
 	public Set<Category> getCategories() {
 		return categories;
+	}
+
+	public void setCategories(Set<Category> categories) {
+		this.categories = categories;
+	}
+
+	public Set<OrderItem> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<OrderItem> items) {
+		this.items = items;
 	}
 
 	@JsonIgnore
@@ -122,8 +165,9 @@ public class Product implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
-				+ ", imgUrl=" + imgUrl + ", categories=" + categories + "]";
+		return "Product [id=" + id + ", name=" + name + ", color=" + color + ", season=" + season + ", size=" + size
+				+ ", purchasePrice=" + purchasePrice + ", sellPrice=" + sellPrice + ", sku=" + sku + ", categories="
+				+ categories + ", items=" + items + "]";
 	}
 
 }
