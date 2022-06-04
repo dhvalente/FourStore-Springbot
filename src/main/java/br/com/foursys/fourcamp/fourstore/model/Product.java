@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +14,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,14 +30,22 @@ public class Product implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
 	private Long id;
 	private String name;
-	private String color;
-	private String season;
-	private String size;
 	private Double purchasePrice;
 	private Double sellPrice;
-	private String sku;
+	private String sku;	
+
+	
+	@ManyToOne
+	@JoinColumn(name="tb_season", referencedColumnName = "id")  
+	private Season season;
+	
+	@ManyToOne
+	@JoinColumn(name="tb_size", referencedColumnName = "id")  
+	private Size size;
+	
 
 	@ManyToMany
 	@JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
@@ -39,22 +53,22 @@ public class Product implements Serializable {
 
 	@OneToMany(mappedBy = "id.product")
 	private Set<OrderItem> items = new HashSet<>();
+	
 
-	@SuppressWarnings("unused")
-	private Product() {
+	
+	public Product() {	
 	}
 
-	public Product(Long id, String name, String color, String season, String size, Double purchasePrice,
+	public Product(Long id, String name, Season season, Size size, Double purchasePrice,
 			Double sellPrice) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.color = color;
 		this.season = season;
 		this.size = size;
 		this.purchasePrice = purchasePrice;
 		this.sellPrice = sellPrice;
-		this.sku = color + season + size;
+
 	}
 
 	public Long getId() {
@@ -73,27 +87,21 @@ public class Product implements Serializable {
 		this.name = name;
 	}
 
-	public String getColor() {
-		return color;
-	}
 
-	public void setColor(String color) {
-		this.color = color;
-	}
-
-	public String getSeason() {
+	public Season getSeason() {
 		return season;
 	}
 
-	public void setSeason(String season) {
+	public void setSeason(Season season) {
 		this.season = season;
 	}
 
-	public String getSize() {
+
+	public Size getSize() {
 		return size;
 	}
 
-	public void setSize(String size) {
+	public void setSize(Size size) {
 		this.size = size;
 	}
 
@@ -165,7 +173,7 @@ public class Product implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", color=" + color + ", season=" + season + ", size=" + size
+		return "Product [id=" + id + ", name=" + name + ", season=" + season + ", size=" + size
 				+ ", purchasePrice=" + purchasePrice + ", sellPrice=" + sellPrice + ", sku=" + sku + ", categories="
 				+ categories + ", items=" + items + "]";
 	}

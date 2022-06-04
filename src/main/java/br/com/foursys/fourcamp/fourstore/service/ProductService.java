@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.foursys.fourcamp.fourstore.controller.exception.DatabaseException;
 import br.com.foursys.fourcamp.fourstore.data.ProductData;
-import br.com.foursys.fourcamp.fourstore.model.Client;
 import br.com.foursys.fourcamp.fourstore.model.Product;
 import br.com.foursys.fourcamp.fourstore.service.exception.ResourceNotFoundException;
 
@@ -50,7 +49,6 @@ public class ProductService {
 
 	private void updateData(Product entity, Product obj) {
 		entity.setName(obj.getName());
-		entity.setColor(obj.getColor());
 		entity.setSeason(obj.getSeason());
 		entity.setSize(obj.getSize());
 		entity.setPurchasePrice(obj.getPurchasePrice());

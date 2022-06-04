@@ -5,18 +5,20 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "tb_category")
-public class Category implements Serializable {
+@Table(name = "tb_size")
+public class Size implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -24,14 +26,14 @@ public class Category implements Serializable {
 	private Long id;
 	private String name;
 	
-	@JsonIgnore
-	@ManyToMany(mappedBy = "categories")
+
+	@OneToMany(targetEntity=Product.class, mappedBy="size",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Product> products = new HashSet<>();
 
-	public Category() {
+	public Size() {
 	}
 
-	public Category(Long id, String name) {
+	public Size(Long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -70,7 +72,7 @@ public class Category implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Category other = (Category) obj;
+		Size other = (Size) obj;
 		return Objects.equals(id, other.id);
 	}
 
