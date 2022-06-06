@@ -2,10 +2,10 @@ package br.com.foursys.fourcamp.fourstore.config;
 
 import java.time.Instant;
 import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
 import br.com.foursys.fourcamp.fourstore.data.CategoryData;
 import br.com.foursys.fourcamp.fourstore.data.ClientData;
@@ -83,14 +83,14 @@ public class TestConfig implements CommandLineRunner {
 		sizeData.saveAll(Arrays.asList(t1, t2, t3, t4, t5, t6, t7));
 		
 		//Salvando os produtos
-		Product p6 = new Product(null, "Regata Macho Alfa", s4, t7, 15.00, 35.00);
+		Product p6 = new Product(null, "Regata Cavada", s4, t7, 15.00, 35.00);
 		Product p1 = new Product(null, "Camiseta Vermelha Manga Curta GG",s1, t1, 20.00, 65.00);
 		Product p2 = new Product(null, "Vestido Amarelo XG",s2, t2, 35.00, 110.00);
 		Product p3 = new Product(null, "Bermuda Preta G2",s2,t3 , 25.00, 45.00);
 		Product p4 = new Product(null, "Alguma Coisa Cinza", s3, t4, 10.00, 35.00);
 		Product p5 = new Product(null, "Camiseta Ceral Radical",s4, t6, 55.00, 70.00);
 		seasonData.saveAll(Arrays.asList(s1, s2, s3, s4));
-		productData.saveAll(Arrays.asList(p1 , p2, p3, p4, p5));
+		productData.saveAll(Arrays.asList(p1 , p2, p3, p4, p5, p6));
 
 		//Salvando o estoque	
 		Stock sp1 = new Stock(null, p1, 42);
@@ -112,8 +112,8 @@ public class TestConfig implements CommandLineRunner {
 		
 
 		
-		Client c1 = new Client(null, "Diogo Valente", "00055522277");
-		Client c2 = new Client(null, "Jose Robson", "11144499965");
+		Client c1 = new Client(null, "Diogo Valente", "078.113.560-58");
+		Client c2 = new Client(null, "Jose Robson", "242.367.460-00");
 		Address a1 = new Address("Rua carochinha", "1111", "Marialva", "Jardim Itabera", "PR", "87145555",c1);
 		Address a2 = new Address("Rua Aristides Bonifácio", "444", "Marialva", "Centro", "PR", "86990000",c2);		
 		c1.setAdress(a1);
@@ -123,14 +123,14 @@ public class TestConfig implements CommandLineRunner {
 		
 
 		
-		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), OrderStatus.PAID, c1);
-		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"),OrderStatus.WAITING_PAYMENT, c2);
-		Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"),OrderStatus.WAITING_PAYMENT, c1); 
+		Order o1 = new Order(null, OrderStatus.PAID, c1);
+		Order o2 = new Order(null, OrderStatus.WAITING_PAYMENT, c2);
+		Order o3 = new Order(null, OrderStatus.WAITING_PAYMENT, c1); 
 
 		clientData.saveAll(Arrays.asList(c1, c2));
 		orderData.saveAll(Arrays.asList(o1, o2, o3));
 		
-		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getSellPrice()); //erro ta partir daaqui
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getSellPrice()); 
 		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getSellPrice());
 		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getSellPrice());
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getSellPrice()); 

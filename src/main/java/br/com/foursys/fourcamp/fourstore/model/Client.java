@@ -13,24 +13,33 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.foursys.fourcamp.fourstore.util.Cpf;
 
 @Entity
 @Table(name = "tb_user")
 public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotNull
+	@NotEmpty
+	@Length(min = 5)
 	private String name;
+	@Cpf
 	private String cpf;
-	
-	@OneToOne(mappedBy = "client" , cascade = CascadeType.ALL)
+
+	@OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
 	private Address address;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
@@ -68,11 +77,11 @@ public class Client implements Serializable {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	
+
 	public List<Order> getOrders() {
 		return orders;
 	}
-	
+
 	public Address getAdress() {
 		return address;
 	}
@@ -102,7 +111,5 @@ public class Client implements Serializable {
 		Client other = (Client) obj;
 		return Objects.equals(cpf, other.cpf) && Objects.equals(id, other.id);
 	}
-
-
 
 }

@@ -9,52 +9,53 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import br.com.foursys.fourcamp.fourstore.controller.exception.DatabaseException;
+import br.com.foursys.fourcamp.fourstore.data.AddressData;
 import br.com.foursys.fourcamp.fourstore.data.ClientData;
+import br.com.foursys.fourcamp.fourstore.model.Address;
 import br.com.foursys.fourcamp.fourstore.model.Client;
 import br.com.foursys.fourcamp.fourstore.service.exception.ResourceNotFoundException;
 
 @Service
-public class ClientService {
+public class AddressService {
 	@Autowired
-	private ClientData clientData;
+	private AddressData addressData;
 
-	public List<Client> findAll() {
-		return clientData.findAll();
+	public List<Address> findAll() {
+		return addressData.findAll();
 	}
 
-	public Client findById(Long id) {
-		Optional<Client> obj = clientData.findById(id);
-		return obj.orElseThrow(()-> new ResourceNotFoundException(id));
+	public Address findById(Long id) {
+		Optional<Address> obj = addressData.findById(id);
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
-	
-	public Client insert(Client obj) {
-		return clientData.save(obj);
+
+	public Address insert(Address obj) {
+		return addressData.save(obj);
 	}
-	
+
 	public void delete(Long id) {
 		try {
-			clientData.deleteById(id);
+			addressData.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException(id);
 		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseException(e.getMessage());
 		}
 	}
-	
-	public Client update(Long id, Client obj) {
-		Client entity = clientData.getReferenceById(id);
+
+	public Address update(Long id, Address obj) {
+		Address entity = addressData.getReferenceById(id);
 		updateData(entity, obj);
-		return clientData.save(entity);
+		return addressData.save(entity);
 	}
 
-	private void updateData(Client entity, Client obj) {
-		entity.setName(obj.getName());
-		entity.setCpf(obj.getCpf());
-		
+	private void updateData(Address entity, Address obj) {
+		entity.setStreet(obj.getStreet());
+		entity.setNumber(obj.getNumber());
+		entity.setCity(obj.getCity());
+		entity.setDistrict(obj.getDistrict());
+		entity.setState(obj.getState());
+		entity.setZipcode(obj.getZipcode());
 	}
 
-	public List<Client> findByCpf(String cpf) {
-		return clientData.findByCpf(cpf);
-	
-	}
 }

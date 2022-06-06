@@ -14,31 +14,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import br.com.foursys.fourcamp.fourstore.model.Season;
-import br.com.foursys.fourcamp.fourstore.service.SeasonService;
+import br.com.foursys.fourcamp.fourstore.model.Address;
+import br.com.foursys.fourcamp.fourstore.service.AddressService;
 
 @RestController
-@RequestMapping(value = "/seasons")
-public class SeasonController {
+@RequestMapping(value = "/address")
+public class AddressController {
 	@Autowired
-	private SeasonService seasonService;
+	private AddressService addressService;
 
 	@GetMapping
-	public ResponseEntity<List<Season>> findAll() {
-		List<Season> list = seasonService.findAll();
+	public ResponseEntity<List<Address>> findAll() {
+		List<Address> list = addressService.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Season> findById(@PathVariable Long id) {
-		Season obj = seasonService.findById(id);
+	public ResponseEntity<Address> findById(@PathVariable Long id) {
+		Address obj = addressService.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
 	@PostMapping
-	public ResponseEntity<Season> insert(@RequestBody Season obj) {
-		obj = seasonService.insert(obj);
+	public ResponseEntity<Address> insert(@RequestBody Address obj) {
+		obj = addressService.insert(obj);
 		// Para retornar com status 201
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
@@ -46,13 +45,13 @@ public class SeasonController {
 
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		seasonService.delete(id);
+		addressService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Season> update(@PathVariable Long id , @RequestBody Season obj) {
-		obj = seasonService.update(id, obj);
+	public ResponseEntity<Address> update(@PathVariable Long id , @RequestBody Address obj) {
+		obj = addressService.update(id, obj);
 		return ResponseEntity.ok(obj);
 	}
 	

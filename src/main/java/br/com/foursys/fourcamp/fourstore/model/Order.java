@@ -2,6 +2,9 @@ package br.com.foursys.fourcamp.fourstore.model;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -29,8 +32,8 @@ public class Order implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
-	private Instant moment;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "GMT")
+	private LocalDateTime date = LocalDateTime.now();
 
 	private Integer orderStatus;
 
@@ -47,10 +50,9 @@ public class Order implements Serializable {
 	public Order() {
 	}
 
-	public Order(Long id, Instant moment, OrderStatus orderStatus, Client client) {
+	public Order(Long id, OrderStatus orderStatus, Client client) {
 		super();
 		this.id = id;
-		this.moment = moment;
 		setOrderStatus(orderStatus);
 		this.client = client;
 	}
@@ -63,12 +65,12 @@ public class Order implements Serializable {
 		this.id = id;
 	}
 
-	public Instant getMoment() {
-		return moment;
+	public LocalDateTime getDate() {
+		return date;
 	}
 
-	public void setMoment(Instant moment) {
-		this.moment = moment;
+	public void setDate(LocalDateTime date) {
+		this.date = date;
 	}
 
 	public Client getClient() {
@@ -130,7 +132,7 @@ public class Order implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", moment=" + moment + ", client=" + client + "]";
+		return "Order [id=" + id + ", Data=" + date + ", client=" + client + "]";
 	}
 
 }
