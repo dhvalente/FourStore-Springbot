@@ -20,6 +20,8 @@ public class OrderService {
 	
 	@Autowired
 	private OrderData orderData;
+	@Autowired
+	private StockService stockService;
 
 	public List<Order> findAll() {
 		return orderData.findAll();
@@ -31,7 +33,9 @@ public class OrderService {
 	}
 	
 	public Order insert(Order obj) {
+		stockService.decreaseStock(obj.getItems());
 		return orderData.save(obj);
+		
 	}
 	
 	public void delete(Long id) {

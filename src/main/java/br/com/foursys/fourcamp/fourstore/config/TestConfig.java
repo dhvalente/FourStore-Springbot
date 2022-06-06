@@ -2,6 +2,7 @@ package br.com.foursys.fourcamp.fourstore.config;
 
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -26,6 +27,7 @@ import br.com.foursys.fourcamp.fourstore.model.Product;
 import br.com.foursys.fourcamp.fourstore.model.Season;
 import br.com.foursys.fourcamp.fourstore.model.Size;
 import br.com.foursys.fourcamp.fourstore.model.Stock;
+import br.com.foursys.fourcamp.fourstore.service.OrderService;
 
 
 @Configuration
@@ -54,6 +56,8 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private StockData stockData;	
+	@Autowired
+	private OrderService orderService;
 	@Override
 	public void run(String... args) throws Exception {
 		
@@ -136,6 +140,14 @@ public class TestConfig implements CommandLineRunner {
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getSellPrice()); 
 		
 		ordemItemData.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+		
+		o1.setItems(new HashSet<>(Arrays.asList(oi1, oi2)));
+		o2.setItems(new HashSet<>(Arrays.asList(oi3)));
+		o3.setItems(new HashSet<>(Arrays.asList(oi4)));
+		orderService.insert(o1);
+		orderService.insert(o2);
+		orderService.insert(o3);
+
 		
 		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
 		o1.setPayment(pay1);

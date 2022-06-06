@@ -132,7 +132,7 @@ public class Product implements Serializable {
 	public void setCategories(Set<Category> categories) {
 		this.categories = categories;
 	}
-
+	@JsonIgnore
 	public Set<OrderItem> getItems() {
 		return items;
 	}

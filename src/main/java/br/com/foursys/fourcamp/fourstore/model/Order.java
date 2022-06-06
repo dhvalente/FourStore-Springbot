@@ -94,9 +94,12 @@ public class Order implements Serializable {
 
 	public Set<OrderItem> getItems(){
 		return items;
+	}	
+	
+	public void setItems(Set<OrderItem> items) {
+		this.items = items;
 	}
-	
-	
+
 	public Payment getPayment() {
 		return payment;
 	}
